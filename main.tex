@@ -1,0 +1,533 @@
+\documentclass[10pt, letterpaper]{article}
+
+% Packages:
+\usepackage[
+    ignoreheadfoot, % set margins without considering header and footer
+    top=2 cm, % seperation between body and page edge from the top
+    bottom=2 cm, % seperation between body and page edge from the bottom
+    left=2 cm, % seperation between body and page edge from the left
+    right=2 cm, % seperation between body and page edge from the right
+    footskip=1.0 cm, % seperation between body and footer
+    % showframe % for debugging 
+]{geometry} % for adjusting page geometry
+\usepackage{titlesec} % for customizing section titles
+\usepackage{tabularx} % for making tables with fixed width columns
+\usepackage{array} % tabularx requires this
+\usepackage[dvipsnames]{xcolor} % for coloring text
+\definecolor{primaryColor}{RGB}{0, 0, 0} % define primary color
+\usepackage{enumitem} % for customizing lists
+\usepackage{fontawesome5} % for using icons
+\usepackage{amsmath} % for math
+\usepackage[
+    pdftitle={Rajat Sandeep's CV},
+    pdfauthor={Rajat Sandeep},
+    pdfcreator={LaTeX with RenderCV},
+    colorlinks=true,
+    urlcolor=primaryColor
+]{hyperref} % for links, metadata and bookmarks
+\usepackage[pscoord]{eso-pic} % for floating text on the page
+\usepackage{calc} % for calculating lengths
+\usepackage{bookmark} % for bookmarks
+\usepackage{lastpage} % for getting the total number of pages
+\usepackage{changepage} % for one column entries (adjustwidth environment)
+\usepackage{paracol} % for two and three column entries
+\usepackage{ifthen} % for conditional statements
+\usepackage{needspace} % for avoiding page brake right after the section title
+\usepackage{iftex} % check if engine is pdflatex, xetex or luatex
+
+% Ensure that generate pdf is machine readable/ATS parsable:
+\ifPDFTeX
+    \input{glyphtounicode}
+    \pdfgentounicode=1
+    \usepackage[T1]{fontenc}
+    \usepackage[utf8]{inputenc}
+    \usepackage{lmodern}
+\fi
+
+\usepackage{charter}
+
+% Some settings:
+\raggedright
+\AtBeginEnvironment{adjustwidth}{\partopsep0pt} % remove space before adjustwidth environment
+\pagestyle{empty} % no header or footer
+\setcounter{secnumdepth}{0} % no section numbering
+\setlength{\parindent}{0pt} % no indentation
+\setlength{\topskip}{0pt} % no top skip
+\setlength{\columnsep}{0.15cm} % set column seperation
+\pagenumbering{gobble} % no page numbering
+
+\titleformat{\section}{\needspace{4\baselineskip}\bfseries\large}{}{0pt}{}[\vspace{1pt}\titlerule]
+
+\titlespacing{\section}{
+    % left space:
+    -1pt
+}{
+    % top space:
+    0.3 cm
+}{
+    % bottom space:
+    0.2 cm
+} % section title spacing
+
+\renewcommand\labelitemi{$\vcenter{\hbox{\small$\bullet$}}$} % custom bullet points
+\newenvironment{highlights}{
+    \begin{itemize}[
+        topsep=0.10 cm,
+        parsep=0.10 cm,
+        partopsep=0pt,
+        itemsep=0pt,
+        leftmargin=0 cm + 10pt
+    ]
+}{
+    \end{itemize}
+} % new environment for highlights
+
+
+\newenvironment{highlightsforbulletentries}{
+    \begin{itemize}[
+        topsep=0.10 cm,
+        parsep=0.10 cm,
+        partopsep=0pt,
+        itemsep=0pt,
+        leftmargin=10pt
+    ]
+}{
+    \end{itemize}
+} % new environment for highlights for bullet entries
+
+\newenvironment{onecolentry}{
+    \begin{adjustwidth}{
+        0 cm + 0.00001 cm
+    }{
+        0 cm + 0.00001 cm
+    }
+}{
+    \end{adjustwidth}
+} % new environment for one column entries
+
+\newenvironment{twocolentry}[2][]{
+    \onecolentry
+    \def\secondColumn{#2}
+    \setcolumnwidth{\fill, 4.5 cm}
+    \begin{paracol}{2}
+}{
+    \switchcolumn \raggedleft \secondColumn
+    \end{paracol}
+    \endonecolentry
+} % new environment for two column entries
+
+\newenvironment{threecolentry}[3][]{
+    \onecolentry
+    \def\thirdColumn{#3}
+    \setcolumnwidth{, \fill, 4.5 cm}
+    \begin{paracol}{3}
+    {\raggedright #2} \switchcolumn
+}{
+    \switchcolumn \raggedleft \thirdColumn
+    \end{paracol}
+    \endonecolentry
+} % new environment for three column entries
+
+\newenvironment{header}{
+    \setlength{\topsep}{0pt}\par\kern\topsep\centering\linespread{1.5}
+}{
+    \par\kern\topsep
+} % new environment for the header
+
+\newcommand{\placelastupdatedtext}{% \placetextbox{<horizontal pos>}{<vertical pos>}{<stuff>}
+  \AddToShipoutPictureFG*{% Add <stuff> to current page foreground
+    \put(
+        \LenToUnit{\paperwidth-2 cm-0 cm+0.05cm},
+        \LenToUnit{\paperheight-1.0 cm}
+    ){\vtop{{\null}\makebox[0pt][c]{
+        \small\color{gray}\textit{Last updated in July 2024}\hspace{\widthof{Last updated in July 2024}}
+    }}}%
+  }%
+}%
+
+% save the original href command in a new command:
+\let\hrefWithoutArrow\href
+
+% new command for external links:
+
+
+\begin{document}
+\newcommand{\AND}{\unskip
+    \cleaders\copy\ANDbox\hskip\wd\ANDbox
+    \ignorespaces
+}
+\newsavebox\ANDbox
+\sbox\ANDbox{$|$}
+
+\begin{header}
+    \fontsize{25 pt}{25 pt}\selectfont Rajat Sandeep Sen
+
+    \vspace{5 pt}
+
+    \normalsize
+    \mbox{Thodupuzha, Kerala}%
+    \kern 5.0 pt%
+    \AND%
+    \kern 5.0 pt%
+    \mbox{\hrefWithoutArrow{mailto:rajatsandeepsen2025@ai.sjcetpalai.ac.in}{rajatsandeepsen2025@ai.sjcetpalai.ac.in}}%
+    \kern 5.0 pt%
+    \AND%
+    \kern 5.0 pt%
+    \mbox{\hrefWithoutArrow{tel:+919846101882}{+91 9846101882}}%
+    \kern 5.0 pt%
+    \AND%
+    \kern 5.0 pt%
+    \mbox{\hrefWithoutArrow{https://rajatsandeepsen.vercel.app/}{rajatsandeepsen.vercel.app}}%
+    \kern 5.0 pt%
+    \AND%
+    \kern 5.0 pt%
+    \mbox{\hrefWithoutArrow{https://linkedin.com/in/rajatsandeepsen}{linkedin.com/in/rajatsandeepsen}}%
+    \kern 5.0 pt%
+    \AND%
+    \kern 5.0 pt%
+    \mbox{\hrefWithoutArrow{https://github.com/rajatsandeepsen}{github.com/rajatsandeepsen}}%
+\end{header}
+
+\vspace{5 pt - 0.3 cm}
+
+\section{Introduction}
+
+\begin{onecolentry}
+    Self-taught Full Stack Developer with 3 years of experience gained through open-source contributions in campus chapters, clubs, and societies.
+\end{onecolentry}
+
+\vspace{0.2 cm}
+
+\begin{onecolentry}
+    Proficient in building Full Stack Applications with adaptability across various frameworks. Currently focusing on Generative AI technologies and DevOps practices, while actively expanding knowledge in advanced DevOps tools (such as AWS, Kubernetes, SST, OpenTofu).
+\end{onecolentry}
+
+\vspace{0.2 cm}
+
+\begin{onecolentry}
+    Committed to continuous learning and applying modern technologies to solve real-world problems through part-time freelancing and open-source contributions as FOSS enthusiast.
+\end{onecolentry}
+
+% \section{Quick Introduction}
+
+% \begin{onecolentry}
+%     \begin{highlightsforbulletentries}
+
+%         \item Each section title is arbitrary, and each section contains a list of entries.
+
+%         \item There are 7 unique entry types: \textit{BulletEntry}, \textit{TextEntry},
+%         \textit{EducationEntry}, \textit{ExperienceEntry}, \textit{NormalEntry},
+%         \textit{PublicationEntry}, and \textit{OneLineEntry}.
+
+%         \item Select a section title, pick an entry type, and start writing your section!
+
+%         \item \href{https://docs.rendercv.com/user_guide/}{Here}, you can find a comprehensive user guide for RenderCV.
+
+%     \end{highlightsforbulletentries}
+% \end{onecolentry}
+
+\section{Education}
+
+\begin{twocolentry}{
+        Nov 2021 – June 2025
+    }
+    \textbf{St Joseph's College of Engineering \& Technology, Palai}, Btech in Artificial Intelligence \& Data Science\end{twocolentry}
+
+\vspace{0.10 cm}
+\begin{onecolentry}
+    \begin{highlights}
+        \item CGPA: 8.11 % (\href{https://example.com}{Transcript})
+        \item \textbf{Coursework:} Artificial Intelligence, Computer Network, OOPs, DSA, Machine Learning, Deep Learning, NLP
+    \end{highlights}
+\end{onecolentry}
+
+% \vspace{0.2 cm}
+
+
+% \begin{twocolentry}{
+%         Jan 2019 – Jan 2021
+%     }
+%     \textbf{St. Augustine's Higher Secondary School Karimkunnam}, Higher Secondary, Computer Science\end{twocolentry}
+
+% \vspace{0.10 cm}
+% \begin{onecolentry}
+%     \begin{highlights}
+%         \item Grade: 95.0\% % (\href{https://example.com}{Transcript})
+%         \item \textbf{Coursework:} Basic of C++, Python, HTML, CSS, PHP
+%     \end{highlights}
+% \end{onecolentry}
+
+\section{Experience}
+
+\begin{twocolentry}{
+        Jun 2022 – Present
+    }
+    \textbf{Cheif Technical Officer}, IEDC -- Startup Bootcamp, SJCET Palai\end{twocolentry}
+
+\vspace{0.10 cm}
+\begin{onecolentry}
+    \begin{highlights}
+        \item Promoted to CTO from technical officer in 2024 for leading the tech team
+        \item Created \& maintained IEDC website at 2022
+        \item Volunteered in organizing IEDC Summit 2022
+        \item Actively engaged in organizing hackathons, workshops and tech talks for
+        promoting entrepreneurship at campus
+    \end{highlights}
+\end{onecolentry}
+
+\vspace{0.2 cm}
+
+\begin{twocolentry}{
+        July 2023 – Dec 2023
+    }
+    \textbf{Frontend Developer Intern}, Gtech-Mulearn -- TechnoPark, Thrivandrum\end{twocolentry}
+
+\vspace{0.10 cm}
+\begin{onecolentry}
+    \begin{highlights}
+        \item Maintain websites as Remote frontend intern for Mulearn, a edu-tech community
+        in India
+        \item 6 months experience with Reactjs (TypeScript) and Django (Python)
+        \item Rewrote the UI components with better abstraction and reusability
+    \end{highlights}
+\end{onecolentry}
+
+\vspace{0.2 cm}
+
+\begin{twocolentry}{
+        Sep 2022 – Jul 2024
+    }
+    \textbf{TensorFlow Lead}, Google Students Developer Club -- SJCET Palai\end{twocolentry}
+
+\vspace{0.10 cm}
+\begin{onecolentry}
+    \begin{highlights}
+        \item Promoted to TensorFlow Lead in GSDC in 2024
+        \item Conducted workshops on TensorFlow, Firebase, Google Cloud Platform
+        \item Created \& maintained GDSC website at 2022 \& 2023
+    \end{highlights}
+\end{onecolentry}
+
+\vspace{0.2 cm}
+
+\begin{twocolentry}{
+        Feb 2023 – Dec 2023
+    }
+    \textbf{Co-Technical Lead}, UiPath Academic Alliance Student -- SJCET Palai\end{twocolentry}
+
+\vspace{0.10 cm}
+\begin{onecolentry}
+    \begin{highlights}
+        \item Joined as Co-Technical lead in 2023 and taught RPA tools
+        \item Traveled around kerala and conducted many workshops on UI Path tools
+    \end{highlights}
+\end{onecolentry}
+
+\vspace{0.2 cm}
+
+\begin{twocolentry}{
+        June 2022 – June 2023
+    }
+    \textbf{Web Developer}, IEEE -- SJCET, Palai\end{twocolentry}
+
+\vspace{0.10 cm}
+\begin{onecolentry}
+    \begin{highlights}
+        \item Developed and maintained IEEE website and organized many events
+        \item Volunteered in IEEE Kochi Hub event 2022
+    \end{highlights}
+\end{onecolentry}
+
+% \section{Publications}
+
+%     \begin{samepage}
+%         \begin{twocolentry}{
+%             Jan 2004
+%         }
+%             \textbf{Magneto-Thermal Thin Shell Approximation for 3D Finite Element Analysis of No-Insulation Coils}
+%         \end{twocolentry}
+
+%         \vspace{0.10 cm}
+
+%         \begin{onecolentry}
+%             \mbox{Albert Smith}, \mbox{\textbf{\textit{Rajat Sandeep}}}, \mbox{Jane Derry}, \mbox{Harry Tom}, \mbox{Frodo Baggins}
+
+%             \vspace{0.10 cm}
+
+%     \href{https://doi.org/10.1109/TASC.2023.3340648}{10.1109/TASC.2023.3340648}
+%     \end{onecolentry}
+%     \end{samepage}
+
+\section{Projects}
+
+\begin{twocolentry}{
+        \href{https://asthra.sjcetpalai.ac.in}{asthra.sjcetpalai.ac.in}
+    }
+    \textbf{Asthra - Tech Fest Website}\end{twocolentry}
+
+\vspace{0.10 cm}
+\begin{onecolentry}
+    \begin{highlights}
+        \item Developed a robotic 3D interactive website for the national level technical
+        fest, with dashboard for event management, registration and ticketing.
+        \item Tech Stack: Nextjs, Supabase, TailwindCSS, ThreeJS, Framer Motion, tRPC
+    \end{highlights}
+\end{onecolentry}
+
+\vspace{0.2 cm}
+
+\begin{twocolentry}{
+        \href{https://luttapi.vercel.app/}{luttapi.vercel.app}
+    }
+    \textbf{LuttAPI - Open source alternative to v0}\end{twocolentry}
+
+\vspace{0.10 cm}
+\begin{onecolentry}
+    \begin{highlights}
+        \item Developed a SaaS for instantly generating \& deploying frontend UI with API
+        endpoints or JSON
+        \item Tech Stack: Nextjs, AI-SDK, Redis (Upstash), TailwindCSS, Framer Motion, tRPC,
+        Github Actions, Anthropic Claude
+    \end{highlights}
+\end{onecolentry}
+
+\vspace{0.2 cm}
+
+\begin{twocolentry}{
+        \href{https://github.com/nexus-sjcet/filesphere.ai}{nexus-sjcet/filesphere.ai}
+    }
+    \textbf{FileSphere.AI - Drive}\end{twocolentry}
+
+\vspace{0.10 cm}
+\begin{onecolentry}
+    \begin{highlights}
+        \item At a hackathon, developed an Action Model AI file management system that can
+        categorize, search, and manage files based on user request by itself
+        \item Tech Stack: Nextjs, LangChain, GO, tRPC, Llama3
+    \end{highlights}
+\end{onecolentry}
+\vspace{0.2 cm}
+
+\begin{twocolentry}{
+        \href{https://www.npmjs.com/package/initiative}{npmjs/initiative}
+    }
+    \textbf{Initiative - LangChain Extension}\end{twocolentry}
+
+\vspace{0.10 cm}
+\begin{onecolentry}
+    \begin{highlights}
+        \item Developed and published library on NPM that turns Large Languages Models into
+        Action Models for sequencial function calling tool chain
+        \item Tech Stack: LangChain, Zod, TypeScript
+    \end{highlights}
+\end{onecolentry}
+\vspace{0.2 cm}
+
+\begin{twocolentry}{
+        \href{https://github.com/nexus-sjcet/mindease}{nexus-sjcet/mindease}
+    }
+    \textbf{MindEase - LAM}\end{twocolentry}
+
+\vspace{0.10 cm}
+\begin{onecolentry}
+    \begin{highlights}
+        \item Developed at Hackathon, a personal whatsapp bot with Action Model AI that can
+        performas health care assistances
+        \item Tech Stack: Python, LangChain, Prisma, FastAPI, Mistral AI
+    \end{highlights}
+\end{onecolentry}
+\vspace{0.2 cm}
+
+\begin{twocolentry}{
+        \href{https://github.com/nexus-sjcet/voice-it}{nexus-sjcet/voice-it}
+    }
+    \textbf{MultiMedia Commenting Extension}\end{twocolentry}
+
+\vspace{0.10 cm}
+\begin{onecolentry}
+    \begin{highlights}
+        \item Developed at Hackathon, a vscode extension that allows multi-media commenting
+        (img, voice, gif etc) inside any code file
+        \item Tech Stack: TypeScript, Vscode API
+    \end{highlights}
+\end{onecolentry}
+\vspace{0.2 cm}
+
+\begin{twocolentry}{
+        \href{https://github.com/rajatsandeepsen/scriptw}{rajatsandeepsen/scriptw}
+    }
+    \textbf{Scriptw - REPL Notebook for Javascript}\end{twocolentry}
+
+\vspace{0.10 cm}
+\begin{onecolentry}
+    \begin{highlights}
+        \item Developed in-browser Jupyter Notebook alternative for Javascript
+        \item Tech Stack: JavaScript, CodeMirror, Nextjs, Prisma
+    \end{highlights}
+\end{onecolentry}
+\vspace{0.2 cm}
+
+\begin{twocolentry}{
+        \href{https://github.com/rajatsandeepsen/transactions}{rajatsandeepsen/transactions}
+    }
+    \textbf{Transaction}\end{twocolentry}
+
+\vspace{0.10 cm}
+\begin{onecolentry}
+    \begin{highlights}
+        \item Developed hands free banking app that can be controlled using Voice as
+        Engineering Mini-Project
+        \item Tech Stack: Nextjs, LangChain, Supabase, tRPC, Llama3, DrizzleORM, Zod
+    \end{highlights}
+\end{onecolentry}
+\vspace{0.2 cm}
+
+\begin{twocolentry}{
+        \href{https://magicui.design/}{magicui.design}
+    }
+    \textbf{Magic-UI CLI}\end{twocolentry}
+
+\vspace{0.10 cm}
+\begin{onecolentry}
+    \begin{highlights}
+        \item Developed a registry \& CLI for open source project MagicUI (library for Design
+        Engineers)
+        \item Tech Stack: Nextjs, Zod, Commander, TypeScript, TailwindCSS, Framer-Motion
+    \end{highlights}
+\end{onecolentry}
+
+\section{Additional Achievements And Awards}
+
+\begin{onecolentry}
+    \textbf{Satwa National Level Hackathon (2024):} Secured First Runner-Up by building Action Model AI for health care assistance
+\end{onecolentry}
+
+\vspace{0.2 cm}
+
+\begin{onecolentry}
+    \textbf{Beyond-the-Loop Hackathon (2024):} Secured First place by building Drive.AI, a Google Drive file system with AI capabilities
+\end{onecolentry}
+
+\section{Technologies}
+
+\begin{onecolentry}
+    \textbf{Languages:} TypeScript, Python, SQL, C++, Java, JavaScript, HTML, CSS
+\end{onecolentry}
+
+\vspace{0.2 cm}
+
+\begin{onecolentry}
+    \textbf{Frameworks and Libraries:} Nextjs (Reactjs), Expo (React-Native), TensorFlow, Expressjs, TailwindCSS, DrizzleORM, Prisma, Next-Auth, tRPC
+\end{onecolentry}
+\vspace{0.2 cm}
+
+\begin{onecolentry}
+    \textbf{Softwares:} Docker, PostgreSQL, Nodejs, Redis, Kubernetes, UI Path %, OpenTofu
+\end{onecolentry}
+\vspace{0.2 cm}
+
+\begin{onecolentry}
+    \textbf{Developer Tools:} Vscode, Git, Github, Figma, Hoppschotch, Ollama, WSL
+\end{onecolentry}
+
+\end{document}
